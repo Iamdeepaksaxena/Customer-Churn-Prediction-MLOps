@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Github%20%20Projects/Customer-Churn-Prediction-MLOps/mlruns/450164278384447503/dccc8e2210134af88bb120de075c988f/artifacts
+end_time: 1758037225904
+entry_point_name: ''
+experiment_id: '450164278384447503'
+lifecycle_stage: active
+run_id: dccc8e2210134af88bb120de075c988f
+run_name: wise-lynx-325
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758037215219
+status: 3
+tags: []
+user_id: deepa
