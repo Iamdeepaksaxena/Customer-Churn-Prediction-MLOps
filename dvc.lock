@@ -1,0 +1,152 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: b6c99b39cbfaf57dd722b611b1352d21
+      size: 3718
+    params:
+      params.yaml:
+        data_ingestion.test_size: 0.25
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 499c9523455a2891e81dbb51b911d6c7.dir
+      size: 892139
+      nfiles: 2
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 499c9523455a2891e81dbb51b911d6c7.dir
+      size: 892139
+      nfiles: 2
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: bc5ab0d0ca066cb5ed72b7f461781bc1
+      size: 4121
+    outs:
+    - path: data/interim
+      hash: md5
+      md5: fec1b5f866b359462f95ee793562076a.dir
+      size: 1611558
+      nfiles: 2
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: fec1b5f866b359462f95ee793562076a.dir
+      size: 1611558
+      nfiles: 2
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 5e7e5865c622c836e1555bdf2c4454f9
+      size: 3530
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 9504073b622f9ef73dcae5f764867394.dir
+      size: 1976571
+      nfiles: 2
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 9504073b622f9ef73dcae5f764867394.dir
+      size: 1976571
+      nfiles: 2
+    - path: src/model_building.py
+      hash: md5
+      md5: 77a3e2d73f58bfd74a8f008abbad611b
+      size: 7021
+    params:
+      params.yaml:
+        models.decision_tree:
+          criterion:
+          - gini
+          - entropy
+          min_samples_split:
+          - 2
+          - 4
+          - 6
+          - 8
+          min_samples_leaf:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+        models.knn:
+          n_neighbors:
+          - 3
+          - 5
+          - 7
+          - 9
+          - 11
+          - 15
+          p:
+          - 1
+          - 2
+        models.logistic_regression: {}
+        models.random_forest:
+          n_estimators:
+          - 100
+          - 200
+          criterion:
+          - gini
+          - entropy
+          min_samples_split:
+          - 2
+          - 4
+          - 6
+          - 8
+          min_samples_leaf:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+        models.svc:
+          kernel:
+          - rbf
+          - linear
+          - poly
+          - sigmoid
+    outs:
+    - path: models/
+      hash: md5
+      md5: 2f99e98ab66f5733ea2c3020761354df.dir
+      size: 16718009
+      nfiles: 6
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: models/
+      hash: md5
+      md5: 2f99e98ab66f5733ea2c3020761354df.dir
+      size: 16718009
+      nfiles: 6
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: 2e04fea4c758379816e8149228f51f71
+      size: 5575
+    params:
+      params.yaml:
+        evaluation.metrics_output: reports/metrics.json
+        evaluation.mlflow_experiment: Customer_Churn_Model_Evaluation_v2
+    outs:
+    - path: reports/metrics.json
+      hash: md5
+      md5: e57601afb2564b94b242a1687e79e896
+      size: 931
