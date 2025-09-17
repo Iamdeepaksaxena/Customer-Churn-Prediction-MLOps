@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 from dvclive import Live
 import mlflow
+import yaml
+import dvclive
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score
 
 # Ensure the "logs" directory exists
@@ -30,6 +32,24 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
+
+
+def load_params(params_path: str) -> dict:
+    """Load parameters from a YAML file."""
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.debug('Parameters retrieved from %s', params_path)
+        return params
+    except FileNotFoundError:
+        logger.error('File not found: %s', params_path)
+        raise
+    except yaml.YAMLError as e:
+        logger.error('YAML error: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error: %s', e)
+        raise
 
 # ============================================
 # Load model
@@ -95,7 +115,9 @@ def save_metrics(metrics: dict, file_path: str) -> None:
 def main():
     try:
         # Load test data
-        test_df = load_data('./data/processed/test_scaled.csv')
+        params = load_params("params.yaml")
+        test_df = load_data(params["data"]["test_path"])
+        #test_df = load_data('./data/processed/test_scaled.csv')
         X_test = test_df.iloc[:, :-1].values
         y_test = test_df.iloc[:, -1].values
 

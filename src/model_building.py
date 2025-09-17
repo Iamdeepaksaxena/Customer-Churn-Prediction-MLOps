@@ -10,6 +10,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
+import yaml
+import dvclive
 
 # Ensure the "logs" directory exists
 log_dir = 'logs'
@@ -34,6 +36,24 @@ logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
 
+# rough work for YAML
+def load_params(params_path: str) -> dict:
+    """Load parameters from a YAML file."""
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.debug('Parameters retrieved from %s', params_path)
+        return params
+    except FileNotFoundError:
+        logger.error('File not found: %s', params_path)
+        raise
+    except yaml.YAMLError as e:
+        logger.error('YAML error: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error: %s', e)
+        raise
+
 # ============================================
 # Load data
 # ============================================
@@ -52,6 +72,7 @@ def load_data(file_path: str) -> pd.DataFrame:
 def train_and_save_models(X_train, y_train):
     try:
         # Define models with placeholder for scaler
+        
         models = {
             'knn': Pipeline([('classifier', KNeighborsClassifier())]),
             'svc': Pipeline([('classifier', SVC())]),
@@ -125,10 +146,33 @@ def train_and_save_models(X_train, y_train):
 def main():
     try:
         # Load scaled training data
+        params = load_params("params.yaml")
         train_df = load_data('./data/processed/train_scaled.csv')
 
         X_train = train_df.iloc[:, :-1].values
         y_train = train_df.iloc[:, -1].values
+        # Create param grid dynamically from YAML
+        param_grid = {
+            "knn": [{
+                "classifier__n_neighbors": params["models"]["knn"]["n_neighbors"],
+                "classifier__p": params["models"]["knn"]["p"]
+            }],
+            "svc": [{
+                "classifier__kernel": params["models"]["svc"]["kernel"]
+            }],
+            "logistic_regression": [{}],
+            "random_forest": [{
+                "classifier__n_estimators": params["models"]["random_forest"]["n_estimators"],
+                "classifier__criterion": params["models"]["random_forest"]["criterion"],
+                "classifier__min_samples_split": params["models"]["random_forest"]["min_samples_split"],
+                "classifier__min_samples_leaf": params["models"]["random_forest"]["min_samples_leaf"]
+            }],
+            "decision_tree": [{
+                "classifier__criterion": params["models"]["decision_tree"]["criterion"],
+                "classifier__min_samples_split": params["models"]["decision_tree"]["min_samples_split"],
+                "classifier__min_samples_leaf": params["models"]["decision_tree"]["min_samples_leaf"]
+            }],
+        }
 
         results = train_and_save_models(X_train, y_train)
 

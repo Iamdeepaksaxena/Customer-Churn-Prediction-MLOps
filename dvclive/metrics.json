@@ -1,6 +1,0 @@
-{
-    "decision_tree_accuracy": 0.8120772946859903,
-    "decision_tree_precision": 0.8557268722466961,
-    "decision_tree_recall": 0.7507246376811594,
-    "decision_tree_auc": 0.8742803799388551
-}
