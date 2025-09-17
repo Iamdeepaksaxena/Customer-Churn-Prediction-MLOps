@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Github%20%20Projects/Customer-Churn-Prediction-MLOps/mlruns/890956198696380823/d51447a7e8f14e99ab9d02d9e04acabc/artifacts
+end_time: 1758123535662
+entry_point_name: ''
+experiment_id: '890956198696380823'
+lifecycle_stage: active
+run_id: d51447a7e8f14e99ab9d02d9e04acabc
+run_name: delicate-hare-310
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758123529116
+status: 3
+tags: []
+user_id: deepa

@@ -26,14 +26,18 @@ stages:
       nfiles: 2
     - path: src/data_preprocessing.py
       hash: md5
-      md5: bc5ab0d0ca066cb5ed72b7f461781bc1
-      size: 4121
+      md5: 40697582c4ded0d99f69548fe6c7bc26
+      size: 4372
     outs:
     - path: data/interim
       hash: md5
       md5: fec1b5f866b359462f95ee793562076a.dir
       size: 1611558
       nfiles: 2
+    - path: models/encoder.pkl
+      hash: md5
+      md5: 7c4c75d3c3d2d8913ebbe3946892ff3b
+      size: 1768
   feature_engineering:
     cmd: python src/feature_engineering.py
     deps:
@@ -44,14 +48,18 @@ stages:
       nfiles: 2
     - path: src/feature_engineering.py
       hash: md5
-      md5: 5e7e5865c622c836e1555bdf2c4454f9
-      size: 3530
+      md5: cacc8328d4ea0f81a8eedbdaaaf86897
+      size: 3781
     outs:
     - path: data/processed
       hash: md5
       md5: 9504073b622f9ef73dcae5f764867394.dir
       size: 1976571
       nfiles: 2
+    - path: models/scaler.pkl
+      hash: md5
+      md5: 45e879ffe8602f4bc18d684f51222f8a
+      size: 650
   model_building:
     cmd: python src/model_building.py
     deps:
@@ -62,8 +70,8 @@ stages:
       nfiles: 2
     - path: src/model_building.py
       hash: md5
-      md5: 77a3e2d73f58bfd74a8f008abbad611b
-      size: 7021
+      md5: d92dd87d9aeeb27672022d500ebf92fd
+      size: 6777
     params:
       params.yaml:
         models.decision_tree:
@@ -124,19 +132,34 @@ stages:
           - poly
           - sigmoid
     outs:
-    - path: models/
+    - path: models/decision_tree_best_model.pkl
       hash: md5
-      md5: 2f99e98ab66f5733ea2c3020761354df.dir
-      size: 16718009
-      nfiles: 6
+      md5: a4b476b8aa44d40a68b503b090b1100b
+      size: 89634
+    - path: models/knn_best_model.pkl
+      hash: md5
+      md5: 41c142745216a2f72adf1bbbdd735139
+      size: 2048284
+    - path: models/logistic_regression_best_model.pkl
+      hash: md5
+      md5: 9dc9bb85e219032c1a8dcba9fd46bd41
+      size: 1058
+    - path: models/random_forest_best_model.pkl
+      hash: md5
+      md5: 87e138e6f71ebeca02a43340d7e0810d
+      size: 19370221
+    - path: models/svc_best_model.pkl
+      hash: md5
+      md5: 4d15d779165f155d3ba62a1ee09e27b8
+      size: 992497
   model_evaluation:
     cmd: python src/model_evaluation.py
     deps:
     - path: models/
       hash: md5
-      md5: 2f99e98ab66f5733ea2c3020761354df.dir
-      size: 16718009
-      nfiles: 6
+      md5: a8a389d2e2354b7cefaaed0b3d20e347.dir
+      size: 22504112
+      nfiles: 7
     - path: src/model_evaluation.py
       hash: md5
       md5: 2e04fea4c758379816e8149228f51f71
@@ -148,5 +171,5 @@ stages:
     outs:
     - path: reports/metrics.json
       hash: md5
-      md5: e57601afb2564b94b242a1687e79e896
-      size: 931
+      md5: 28b169fa143cbc626b8ddf4d02617afd
+      size: 932

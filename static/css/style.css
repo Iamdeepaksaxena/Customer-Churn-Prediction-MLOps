@@ -1,0 +1,107 @@
+/* Reset & base */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #000;
+    /* Black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    /* White text */
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.08);
+    /* subtle white overlay */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    /* White */
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    color: #ccc;
+    /* Light gray */
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    /* White */
+}
+
+input,
+select {
+    padding: 0.6rem;
+    margin-top: 0.4rem;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    /* dark glass input */
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #ff6ec4;
+    /* pink accent */
+}
+
+.btn {
+    grid-column: 1 / -1;
+    padding: 0.8rem;
+    background: linear-gradient(45deg, #ff6ec4, #7873f5);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.result .prediction {
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #fff;
+    /* White */
+}

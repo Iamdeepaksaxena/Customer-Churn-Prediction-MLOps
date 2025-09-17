@@ -1,4 +1,5 @@
 import os
+import pickle
 import logging
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
@@ -69,9 +70,17 @@ def preprocess_df(df: pd.DataFrame, target_column: str = 'Churn') -> pd.DataFram
             # Drop categorical columns and join encoded ones
             X = pd.concat([X.drop(columns=categorical_cols), X_encoded], axis=1)
 
+            # Ensure models directory exists before saving encoder
+            os.makedirs('./models', exist_ok=True)
+            with open('./models/encoder.pkl', 'wb') as f:
+                pickle.dump(encoder, f)
+
         # Handle class imbalance using SMOTE
         smote = SMOTE(random_state=42)
         X_resampled, y_resampled = smote.fit_resample(X, y)
+
+
+        
 
         # Combine features + target into one DataFrame
         df_resampled = pd.concat([X_resampled, y_resampled], axis=1)

@@ -176,11 +176,7 @@ def main():
 
         results = train_and_save_models(X_train, y_train)
 
-        # Save results to a file
-        os.makedirs('models', exist_ok=True)
-        with open('models/model_results.pkl', 'wb') as f:
-            pickle.dump(results, f)
-        logger.debug("Saved all model results to models/model_results.pkl")
+       
 
     except Exception as e:
         logger.error(f"Failed to complete model building: {e}")

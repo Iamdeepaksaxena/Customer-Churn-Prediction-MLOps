@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from sklearn.preprocessing import StandardScaler
 import logging
-
+import pickle  # <-- added import for saving scaler
 
 # ============================================
 # Setup logging
@@ -28,8 +28,6 @@ file_handler.setFormatter(formatter)
 
 logger.addHandler(file_handler)
 logger.addFilter(console_handler)
-
-
 
 # =================================================
 # Load data
@@ -66,7 +64,12 @@ def scale_features(df: pd.DataFrame, columns_to_scale: list) -> pd.DataFrame:
         scaler = StandardScaler()
         df_scaled[columns_to_scale] = scaler.fit_transform(df_scaled[columns_to_scale])
 
-        logger.debug(f"Scaled columns {columns_to_scale} using StandardScaler")
+        # Save the scaler after fitting
+        os.makedirs('./models', exist_ok=True)
+        with open('./models/scaler.pkl', 'wb') as f:
+            pickle.dump(scaler, f)
+
+        logger.debug(f"Scaled columns {columns_to_scale} using StandardScaler and saved scaler.pkl")
         return df_scaled
 
     except Exception as e:

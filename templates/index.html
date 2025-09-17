@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Churn Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container glass">
+        <h1 class="title">Customer Churn Predictor</h1>
+        <p class="subtitle">Fill in customer details to predict churn</p>
+
+        <form action="{{ url_for('predict') }}" method="post" class="form-grid">
+            <label>Gender
+        <select name="gender" required>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+      </label>
+
+            <label>Senior Citizen
+        <select name="SeniorCitizen" required>
+          <option value="0">No</option>
+          <option value="1">Yes</option>
+        </select>
+      </label>
+
+            <label>Partner
+        <select name="Partner" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+
+            <label>Dependents
+        <select name="Dependents" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+
+            <label>Tenure (months)
+        <input type="number" name="tenure" min="0" max="200" required>
+      </label>
+
+            <label>Phone Service
+        <select name="PhoneService" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+
+            <label>Multiple Lines
+        <select name="MultipleLines" required>
+          <option value="No phone service">No phone service</option>
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </label>
+
+            <label>Internet Service
+        <select name="InternetService" required>
+          <option value="DSL">DSL</option>
+          <option value="Fiber optic">Fiber optic</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+
+            <label>Online Security
+        <select name="OnlineSecurity" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </label>
+
+            <label>Online Backup
+        <select name="OnlineBackup" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </label>
+
+            <label>Device Protection
+        <select name="DeviceProtection" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </label>
+
+            <label>Tech Support
+        <select name="TechSupport" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </label>
+
+            <label>Streaming TV
+        <select name="StreamingTV" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </label>
+
+            <label>Streaming Movies
+        <select name="StreamingMovies" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="No internet service">No internet service</option>
+        </select>
+      </label>
+
+            <label>Contract
+        <select name="Contract" required>
+          <option value="Month-to-month">Month-to-month</option>
+          <option value="One year">One year</option>
+          <option value="Two year">Two year</option>
+        </select>
+      </label>
+
+            <label>Paperless Billing
+        <select name="PaperlessBilling" required>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </label>
+
+            <label>Payment Method
+        <select name="PaymentMethod" required>
+          <option value="Electronic check">Electronic check</option>
+          <option value="Mailed check">Mailed check</option>
+          <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+          <option value="Credit card (automatic)">Credit card (automatic)</option>
+        </select>
+      </label>
+
+            <label>Monthly Charges
+        <input type="number" name="MonthlyCharges" step="0.01" required>
+      </label>
+
+            <label>Total Charges
+        <input type="number" name="TotalCharges" step="0.01" required>
+      </label>
+
+            <button type="submit" class="btn">Predict</button>
+        </form>
+    </div>
+</body>
+
+</html>

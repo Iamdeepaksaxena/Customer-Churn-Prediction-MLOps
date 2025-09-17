@@ -17,7 +17,7 @@ stages:
     - src/data_preprocessing.py
     outs:
     - data/interim
-
+    - models/encoder.pkl
 
   # Stage 3: Feature engineering
   feature_engineering:
@@ -27,6 +27,7 @@ stages:
     - src/feature_engineering.py
     outs:
     - data/processed
+    - models/scaler.pkl
 
   # Stage 4: Model building
   model_building:
@@ -41,7 +42,12 @@ stages:
     - models.random_forest
     - models.decision_tree
     outs:
-    - models/
+    - models/knn_best_model.pkl
+    - models/svc_best_model.pkl
+    - models/logistic_regression_best_model.pkl
+    - models/random_forest_best_model.pkl
+    - models/decision_tree_best_model.pkl
+
 
   # Stage 5: Model evaluation
   model_evaluation:
@@ -54,8 +60,6 @@ stages:
     - evaluation.metrics_output
     metrics:
     - reports/metrics.json
-
-
 
 # Global experiment tracking
 params:
